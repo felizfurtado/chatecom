@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hi–Lo | Elevated Essentials</title>
+    <style>
+      /* Modern Base Styles */
+      :root {
+        --bg: #f8f8f8;
+        --surface: #ffffff;
+        --text: #1a1a1a;
+        --text-light: #666;
+        --accent: #1a1a1a;
+        --accent-hover: #333;
+        --border: #eaeaea;
+        --new: #4a6b57;
+        --sale: #c45c5c;
+        --chat-bg: rgba(255, 255, 255, 0.96);
+        --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+        --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+      }
+
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        font-family: var(--font-main);
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+        padding-bottom: 140px; /* Increased space for chat */
+      }
+
+      /* Ultra-minimal header */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5%;
+        position: sticky;
+        top: 0;
+        background: var(--surface);
+        z-index: 100;
+        border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+      }
+
+      .logo {
+        font-size: 1.25rem;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        color: var(--text);
+        text-decoration: none;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 28px;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 500;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+        transition: opacity 0.2s;
+        position: relative;
+        padding: 8px 0;
+      }
+
+      nav a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent);
+        transition: width 0.3s ease;
+      }
+
+      nav a:hover::after {
+        width: 100%;
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
+
+      .header-actions span {
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: transform 0.2s;
+        padding: 8px;
+        display: inline-flex;
+        border-radius: 50%;
+      }
+
+      .header-actions span:hover {
+        transform: scale(1.1);
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* Main content */
+      main {
+        padding: 40px 5%;
+        max-width: 1400px;
+        margin: 0 auto;
+        animation: fadeIn 0.5s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+
+      .page-title {
+        font-size: 1.75rem;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        position: relative;
+        display: inline-block;
+      }
+
+      .page-title::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: var(--accent);
+      }
+
+      .filter-sort {
+        display: flex;
+        gap: 16px;
+      }
+
+      .filter-sort select {
+        padding: 10px 32px 10px 16px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--surface);
+        font-family: var(--font-main);
+        font-size: 0.85rem;
+        color: var(--text);
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 16px;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .filter-sort select:hover {
+        border-color: var(--accent);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* Elevated product grid */
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 32px;
+      }
+
+      .product-card {
+        background: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        width: 250px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        /* height: 400px; */
+      }
+
+      .product-image {
+        position: relative;
+        width: 100%;
+        height: 60%;
+        height: 0;
+        padding-bottom: 120%;
+        overflow: hidden;
+      }
+
+      .product-image img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .product-badge {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        padding: 3px 8px;
+        font-size: 0.6rem;
+        font-weight: 600;
+        border-radius: 3px;
+        background: #4a6b57;
+        color: white;
+      }
+
+      .wishlist-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: rgba(255, 255, 255, 0.8);
+        border: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .product-info {
+        padding: 10px;
+      }
+
+      .product-title {
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .product-price {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 8px;
+      }
+
+      .current-price {
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .original-price {
+        font-size: 0.7rem;
+        color: #999;
+        text-decoration: line-through;
+      }
+
+      .discount {
+        font-size: 0.6rem;
+        color: #c45c5c;
+        background: rgba(196, 92, 92, 0.1);
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .product-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .color-dots {
+        display: flex;
+        gap: 5px;
+      }
+
+      .color-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 1px solid #eee;
+      }
+
+      .color-dot.active {
+        border-color: #333;
+      }
+
+      .rating {
+        font-size: 0.7rem;
+        color: #666;
+      }
+
+      /* Modern chat interface with filters */
+      .chat-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 12px 16px;
+        border-top: 1px solid #eee;
+        z-index: 1000;
+      }
+
+      .filter-row {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 12px;
+        scrollbar-width: none; /* Firefox */
+      }
+
+      .filter-row::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+      }
+
+      .filter-chip {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 50px;
+        padding: 6px 14px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      .filter-chip:hover {
+        background: var(--accent);
+        color: var(--surface);
+        border-color: var(--accent);
+      }
+
+      .chat-input-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .chat-input {
+        display: flex;
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        overflow: hidden;
+        height: 56px; /* Increased height */
+      }
+
+      .chat-input input {
+        flex: 1;
+        padding: 16px 20px;
+        border: 0;
+        background: transparent;
+        font-family: var(--font-main);
+        font-size: 0.95rem; /* Slightly larger */
+        outline: none;
+      }
+
+      .chat-actions {
+        display: flex;
+        gap: 12px;
+        margin-left: 8px;
+      }
+
+      .chat-action {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        color: #666;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .chat-action:hover {
+        color: #333;
+      }
+
+      .chat-action svg {
+        width: 20px;
+        height: 20px;
+        stroke-width: 2;
+      }
+
+      .remove-filter {
+        font-size: 16px;
+        line-height: 1;
+        padding: 2px;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+      }
+
+      .remove-filter:hover {
+        opacity: 1;
+      }
+
+      /* Responsive design */
+      @media (max-width: 1024px) {
+        .products-grid {
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+          gap: 24px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .products-grid {
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+
+        header {
+          padding: 16px 5%;
+        }
+
+        nav ul {
+          gap: 16px;
+        }
+
+        .logo {
+          position: static;
+          transform: none;
+          margin-right: auto;
+          padding-left: 16px;
+          font-size: 1.1rem;
+        }
+
+        .page-title {
+          font-size: 1.5rem;
+        }
+
+        .filter-sort select {
+          padding: 8px 24px 8px 12px;
+          font-size: 0.8rem;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .products-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
+        }
+
+        .page-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 16px;
+          margin-bottom: 24px;
+        }
+
+        .filter-sort {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        nav ul {
+          display: none;
+        }
+
+        .logo {
+          padding-left: 0;
+        }
+
+        .product-info {
+          padding: 0 12px 12px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .products-grid {
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+
+        .page-title {
+          font-size: 1.4rem;
+        }
+
+        .filter-sort {
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .filter-sort select {
+          width: 100%;
+        }
+
+        .header-actions span {
+          font-size: 1rem;
+          padding: 6px;
+        }
+
+        .product-image {
+          padding-bottom: 120%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="#">Shop</a></li>
+          <li><a href="#">Collections</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
+
+      <a href="#" class="logo">Hi–Lo</a>
+
+      <div class="header-actions">
+        <span>🔍</span>
+        <span>🛍</span>
+      </div>
+    </header>
+
+    <main>
+      <div class="page-header">
+        <h2 class="page-title">Essentials</h2>
+        <div class="filter-sort">
+          <select>
+            <option>Filter</option>
+            <option>Category</option>
+            <option>Price</option>
+            <option>Color</option>
+          </select>
+          <select>
+            <option>Sort by</option>
+            <option>Newest</option>
+            <option>Price: Low to High</option>
+            <option>Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="products-grid">
+        {% if data %} {% for i in data %}
+        <!-- Product 1 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="{{i.image}}" alt="Oversized Hoodie" />
+            <span class="product-badge new-badge">New</span>
+            <button class="wishlist-btn">♥</button>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">{{i.name}}</h3>
+            <div class="product-price">
+              <span class="current-price">र{{i.price}}</span>
+              <span class="original-price">र{{ i.price|add:"201" }}</span>
+              <span class="discount">20% off</span>
+            </div>
+            <div class="product-meta">
+              <div class="color-dots">
+                <span
+                  class="color-dot active"
+                  style="background-color: #1a1a1a"
+                ></span>
+                <span
+                  class="color-dot"
+                  style="background-color: #d4a373"
+                ></span>
+                <span
+                  class="color-dot"
+                  style="background-color: #4a6b57"
+                ></span>
+              </div>
+              <div class="rating">★★★★☆</div>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %} {% endif %} {% if data|length == 0 %}
+        <p
+          style="
+            padding: 10px;
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            border-radius: 5px;
+          "
+        >
+          Sorry 😕 No products match your filters .
+        </p>
+        {% endif %} {% if error %}
+        <script>
+          alert("{{ error }}");
+        </script>
+        {% endif %}
+      </div>
+    </main>
+
+    <!-- Enhanced chat interface with filter chips -->
+
+    <div class="chat-container">
+      <div class="filter-scroll-container">
+        <div class="filter-row" id="filter-row">
+          {% if filters %} {% for key, value in filters.items %}
+          <div class="filter-chip">
+            <strong>{{ key }} : {{ value }}</strong>
+            <span class="remove-filter">×</span>
+          </div>
+          {% endfor %} {% endif %}
+        </div>
+      </div>
+
+      <div class="chat-input-wrapper">
+        <div class="chat-input">
+          <input
+            type="text"
+            id="ai-query-input"
+            placeholder="Ask about hoodies..."
+            autocomplete="off"
+          />
+          <div class="chat-actions">
+            <button class="chat-action" id="ai-search-btn" aria-label="Search">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchBtn = document.getElementById("ai-search-btn");
+    const queryInput = document.getElementById("ai-query-input");
+    const productsGrid = document.querySelector(".products-grid");
+    const filterRow = document.getElementById("filter-row");
+
+    function updateProductsGrid(products, filters) {
+ 
+      if (products && products.length > 0) {
+        productsGrid.innerHTML = products
+          .map(
+            (product) => `
+          <div class="product-card">
+            <div class="product-image">
+              <img src="${product.image}" alt="${product.name}" />
+              <span class="product-badge new-badge">New</span>
+              <button class="wishlist-btn">♥</button>
+            </div>
+            <div class="product-info">
+              <h3 class="product-title">${product.name}</h3>
+              <div class="product-price">
+                <span class="current-price">र${product.price}</span>
+                <span class="original-price">र${parseInt(product.price) + 201}</span>
+                <span class="discount">20% off</span>
+              </div>
+              <div class="product-meta">
+                <div class="color-dots">
+                  <span class="color-dot active" style="background-color: #1a1a1a"></span>
+                  <span class="color-dot" style="background-color: #d4a373"></span>
+                  <span class="color-dot" style="background-color: #4a6b57"></span>
+                </div>
+                <div class="rating">★★★★☆</div>
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      } else {
+        productsGrid.innerHTML = `
+          <p style="padding: 10px; background: #fff3cd; color: #856404; border: 1px solid #ffeeba; border-radius: 5px;">
+            Sorry 😕 No products match your filters.
+          </p>
+        `;
+      }
+
+      // Update Filters
+      if (filters) {
+        filterRow.innerHTML = Object.entries(filters)
+          .map(
+            ([key, value]) => `
+            <div class="filter-chip">
+              <strong>${key}: ${value}</strong>
+              <span class="remove-filter">×</span>
+            </div>
+          `
+          )
+          .join("");
+
+        filterRow.querySelectorAll(".remove-filter").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            const chip = e.target.closest(".filter-chip");
+            const filterText = chip.querySelector("strong").textContent;
+
+            fetch("/remove_filter/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}",
+              },
+              body: JSON.stringify({ filter: filterText }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                updateProductsGrid(data.data, data.filters);
+              })
+              .catch((err) => console.error("Error:", err));
+          });
+        });
+      }
+    }
+
+    // Handle search
+    function handleSearch() {
+      const query = queryInput.value.trim();
+      if (!query) return;
+
+      fetch("/ai_filter/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
+        body: JSON.stringify({ query }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.error) {
+            alert(data.error);
+            return;
+          }
+          updateProductsGrid(data.data, data.filters);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("An error occurred. Please try again.");
+        });
+    }
+
+    // Event listeners
+    searchBtn.addEventListener("click", handleSearch);
+    queryInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") handleSearch();
+    });
+  });
+</script>
+
+
+    <!-- <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const searchBtn = document.getElementById("ai-search-btn");
+        const queryInput = document.getElementById("ai-query-input");
+        const productsGrid = document.querySelector(".products-grid");
+        const filterRow = document.getElementById("filter-row");
+
+        function updateProductsGrid(products, filters) {
+  // Update Products
+  if (products && products.length > 0) {
+    productsGrid.innerHTML = products
+      .map(
+        (product) => `
+        <div class="product-card">
+          <div class="product-image">
+            <img src="${product.image}" alt="${product.name}" />
+            <span class="product-badge new-badge">New</span>
+            <button class="wishlist-btn">♥</button>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">${product.name}</h3>
+            <div class="product-price">
+              <span class="current-price">र${product.price}</span>
+              <span class="original-price">र${parseInt(product.price) + 201}</span>
+              <span class="discount">20% off</span>
+            </div>
+            <div class="product-meta">
+              <div class="color-dots">
+                <span class="color-dot active" style="background-color: #1a1a1a"></span>
+                <span class="color-dot" style="background-color: #d4a373"></span>
+                <span class="color-dot" style="background-color: #4a6b57"></span>
+              </div>
+              <div class="rating">★★★★☆</div>
+            </div>
+          </div>
+        </div>
+      `
+      )
+      .join("");
+  } else {
+    productsGrid.innerHTML = `
+      <p style="padding: 10px; background: #fff3cd; color: #856404; border: 1px solid #ffeeba; border-radius: 5px;">
+        Sorry 😕 No products match your filters.
+      </p>
+    `;
+  }
+
+  // Update Filters
+  if (filters) {
+    filterRow.innerHTML = Object.entries(filters)
+      .map(
+        ([key, value]) => `
+        <div class="filter-chip">
+          <strong>${key}: ${value}</strong>
+          <span class="remove-filter">×</span>
+        </div>
+      `
+      )
+      .join("");
+  }
+}
+
+
+        // Handle search
+        function handleSearch() {
+          const query = queryInput.value.trim();
+          if (!query) return;
+
+          fetch("/ai_filter/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": "{{ csrf_token }}",
+            },
+            body: JSON.stringify({ query }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.error) {
+                alert(data.error);
+                return;
+              }
+
+              // Update products grid
+
+              
+              if (data.data && data.data.length > 0) {
+                productsGrid.innerHTML = data.data
+                  .map(
+                    (product) => `
+            <div class="product-card">
+              <div class="product-image">
+                <img src="${product.image}" alt="${product.name}" />
+                <span class="product-badge new-badge">New</span>
+                <button class="wishlist-btn">♥</button>
+              </div>
+              <div class="product-info">
+                <h3 class="product-title">${product.name}</h3>
+                <div class="product-price">
+                  <span class="current-price">र${product.price}</span>
+                  <span class="original-price">र${
+                    parseInt(product.price) + 201
+                  }</span>
+                  <span class="discount">20% off</span>
+                </div>
+                <div class="product-meta">
+                  <div class="color-dots">
+                    <span class="color-dot active" style="background-color: #1a1a1a"></span>
+                    <span class="color-dot" style="background-color: #d4a373"></span>
+                    <span class="color-dot" style="background-color: #4a6b57"></span>
+                  </div>
+                  <div class="rating">★★★★☆</div>
+                </div>
+              </div>
+            </div>
+          `
+                  )
+                  .join("");
+              } else {
+                productsGrid.innerHTML = `
+            <p style="padding: 10px; background: #fff3cd; color: #856404; border: 1px solid #ffeeba; border-radius: 5px;">
+              Sorry 😕 No products match your filters.
+            </p>
+          `;
+              }
+
+              // Update filters
+              if (data.filters) {
+                filterRow.innerHTML = Object.entries(data.filters)
+                  .map(
+                    ([key, value]) => `
+              <div class="filter-chip">
+                <strong>${key}: ${value}</strong>
+                <span class="remove-filter" >×</span>
+              </div>
+            `
+                  )
+                  .join("");
+                filterRow.addEventListener("click", (e) => {
+                  if (e.target.classList.contains("remove-filter")) {
+                    const chip = e.target.closest(".filter-chip");
+                    const filterText = chip.querySelector("strong").textContent;
+                    console.log(filterText);
+                    chip.remove();
+
+                    fetch("/remove_filter/", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}",
+                      },
+                      body: JSON.stringify({
+                        filter: filterText,
+                      }),
+                    })
+                      .then((response) => response.json())
+                      .then((data) => {
+                        // Update UI with all products
+                        updateProductsGrid(data.data, data.filters);
+                      })
+                      .catch((err) => console.error("Error:", err));
+                  }
+                });
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("An error occurred. Please try again.");
+            });
+        }
+
+        // Event listeners
+        searchBtn.addEventListener("click", handleSearch);
+        queryInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter") handleSearch();
+        });
+
+        // TODO: Add remove filter functionality
+        filterRow.addEventListener("click", function (e) {
+          if (e.target.classList.contains("remove-filter")) {
+            // Implement filter removal logic here
+          }
+        });
+      });
+    </script> -->
+  </body>
+</html>

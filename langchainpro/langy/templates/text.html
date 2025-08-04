@@ -1,0 +1,224 @@
+<html>
+  <head>
+    <style>
+      body {
+        font-family: "Arial";
+        background: #f7f7f7;
+        padding: 2rem;
+      }
+
+      .product-container {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .card {
+        background: white;
+        padding: 1rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 200px;
+        text-align: center;
+        transition: transform 0.2s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card img {
+        width: 100%;
+        border-radius: 8px;
+      }
+
+      .card h3 {
+        font-size: 1.1rem;
+        margin: 0.8rem 0 0.2rem;
+      }
+
+      .card p {
+        color: #444;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      .quantity-control {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 0.8rem;
+      }
+
+      .quantity-control button {
+        background-color: #ddd;
+        border: none;
+        padding: 5px 10px;
+        font-size: 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .quantity-control span {
+        min-width: 20px;
+        display: inline-block;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .add-cart-btn {
+        margin-top: 1rem;
+        padding: 8px 12px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .add-cart-btn:hover {
+        background-color: #45a049;
+      }
+
+      input[type="text"] {
+        padding: 12px 16px;
+        width: 250px;
+        font-size: 16px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        outline: none;
+        transition: 0.3s ease;
+      }
+
+      input[type="text"]:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+      }
+
+      button {
+        padding: 12px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-left: 10px;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>🔥 Trending Products</h2>
+    <div class="product-container" id="product-container">
+      <!-- <div class="card">
+      <img src="https://file.aiquickdraw.com/imgcompressed/img/compressed_f8769206cd169f1edea6929c085e5cc1.webp" alt="Nike Air Max">
+      <h3 class="prodname">Nike Air Max</h3>
+      <p>129.99</p>
+      <div class="quantity-control">
+        <button class="minus">-</button>
+        <span class="zz">1</span>
+        <button class="plus">+</button>
+      </div>
+      <button class="add-cart-btn" id="ct">Add to Cart</button>
+      
+    </div> -->
+    </div>
+
+    <br />
+
+    <input id="myInput" placeholder="Type something" />
+    <button onclick="changeInput()" id="btn">Change</button>
+
+      <script>
+     
+
+        // console.log(productnames)
+
+        fetch("http://127.0.0.1:8000/api/prod")
+        .then((res) => res.json())
+        .then((products) => {
+
+        
+
+        let product = document.querySelector(".product-container");
+
+        products.forEach((prod) => {
+          return product.innerHTML += `
+            <div class="card">
+          <img src="${prod.image}" alt="Nike Air Max">
+          <h3 class="prodname">${prod.name}</h3>
+          <p>${prod.price}</p>
+          <div class="quantity-control">
+            <button class="minus">-</button>
+            <span class="zz">1</span>
+            <button class="plus">+</button>
+          </div>
+          <button class="add-cart-btn" id="ct">Add to Cart</button>
+
+        </div>
+            `;
+        });
+
+
+
+
+
+        let cards = document.querySelectorAll(".card")
+
+        cart=[]
+
+        cards.forEach(card => {
+
+        let plus = card.querySelector(".plus")
+        let minus = card.querySelector(".minus")
+        let quantity = card.querySelector(".zz")
+        let addtocart = card.querySelector("#ct")
+        let prodname = card.querySelector(".prodname").innerText
+        
+
+        plus.addEventListener("click" , () => {
+          counter = parseInt(quantity.innerText)
+          quantity.innerText = counter + 1
+
+        });
+
+        minus.addEventListener("click", () => {
+          counter = parseInt(quantity.innerText)
+          if (counter > 1 ){
+            quantity.innerText = counter - 1
+          }
+        });
+
+        addtocart.addEventListener('click', () => {
+          quantity = parseInt(quantity.innerText)
+          cart.push({"name":prodname , "quantity":quantity})
+
+
+            console.log(cart)
+
+          
+
+        });
+
+
+
+
+
+        });
+
+
+});
+
+
+
+      </script>
+  </body>
+</html>
