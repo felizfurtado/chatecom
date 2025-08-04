@@ -11,7 +11,7 @@ import re
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-genai.configure(api_key="AIzaSyCNiAbqtP8Sxr8tFAnHQItZTtCB3yZnH_Y")
+genai.configure(api_key="")
 model = genai.GenerativeModel('gemini-2.0-flash')
 
 
@@ -180,4 +180,5 @@ def remove_filter(request):
             return JsonResponse(result)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=400)
+
     return JsonResponse({'error': 'Invalid request method'}, status=400)
